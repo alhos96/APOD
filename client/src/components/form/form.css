@@ -1,0 +1,23 @@
+.form-wrapp {
+  min-height: 100vh;
+}
+
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+#uploaded-image {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  object-position: center;
+  border: 2px solid #0b3d91;
+  border-radius: 5px;
+  padding: 2px;
+}

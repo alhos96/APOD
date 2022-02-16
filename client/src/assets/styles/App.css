@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.5px !important;
+  font-family: "Poppins";
+}
+
+.App {
+  min-height: 100vh;
+}
+
+button {
+  text-transform: lowercase !important;
+  letter-spacing: 1px !important;
+  font-size: large !important;
+}
+
+.link {
+  color: #0b3c91c7;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #fc3d21;
+}

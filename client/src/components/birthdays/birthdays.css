@@ -1,0 +1,40 @@
+.birthday-list-wrapp {
+  margin-top: 15px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.table-wrapp {
+  margin-top: 20px;
+  border: 2px solid #0b3d91;
+  border-radius: 5px;
+  height: 200px;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  max-width: 160px !important;
+  font-weight: bold !important;
+}
+
+td {
+  max-width: 160px !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.clickable {
+  color: #0b3d91 !important;
+  text-decoration: underline !important;
+}
