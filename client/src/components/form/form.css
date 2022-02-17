@@ -21,3 +21,14 @@
   border-radius: 5px;
   padding: 2px;
 }
+
+.upload-photo {
+  cursor: pointer;
+  opacity: 1;
+  transition: 0.2s ease;
+}
+
+.upload-photo:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

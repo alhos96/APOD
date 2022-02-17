@@ -1,35 +1,24 @@
-import React, { Children, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import axios from "axios";
 
-import logo from "../../assets/images/logo.svg";
 import Logo from "../utils/Logo";
 import BirthdaysList from "../birthdays/BirthdaysList";
 import "./calendar.css";
+import { Typography } from "@mui/material";
+import MyModal from "../modal/MyModal";
 
 const localizer = momentLocalizer(moment);
 
 function MyCalendar() {
   const [allBirthdays, setAllBirthdays] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
+  const [selectedBirthday, setSelectedBirthday] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // decide in which cell a birthday will be shown
-  const BirthdayCell = ({ children, value }) => {
-    let dayInMonth = value;
-
-    return React.cloneElement(Children.only(children), {
-      style: {
-        ...children.style,
-        background: dayInMonth === currentDate && `url(${logo})`,
-      },
-    });
-  };
-
-  console.log(currentDate);
-
+  // get all birthdays data
   useEffect(() => {
     const getBirthdays = async () => {
       try {
@@ -52,7 +41,9 @@ function MyCalendar() {
   if (isLoading) return <p>...Loading</p>;
 
   return (
-    <div>
+    <div className="calendar">
+      {selectedBirthday && <MyModal selectedBirthday={selectedBirthday} setSelectedBirthday={setSelectedBirthday} />}
+
       <div className="calendar-logo">
         <Logo />
       </div>
@@ -61,26 +52,26 @@ function MyCalendar() {
         localizer={localizer}
         events={allBirthdays}
         // always open calendar on birthday created last
-        //defaultDate={currentDate}
         date={currentDate}
         onNavigate={(date) => {
+          // enable navigation
           setCurrentDate(date);
         }}
         views={["month"]}
         style={{ height: "100vh" }}
         onSelectEvent={(e) => {
           // trigger modal open on click of birthday
-          console.log(e);
-        }}
-        onSelectSlot={(e) => console.log("s")}
-        onClick={() => console.log("fsirst")}
-        on
-        components={{
-          dateCellWrapper: BirthdayCell,
+          setSelectedBirthday(e);
         }}
       />
 
-      <BirthdaysList allBirthdays={allBirthdays} setCurrentDate={setCurrentDate} />
+      {allBirthdays.length > 0 ? (
+        <BirthdaysList allBirthdays={allBirthdays} setCurrentDate={setCurrentDate} />
+      ) : (
+        <Typography textAlign="center" variant="body2" className="warning" color="secondary">
+          Something went wrong when fetching birthdays. Check connections and refresh page or click on logo to add birthday..
+        </Typography>
+      )}
     </div>
   );
 }

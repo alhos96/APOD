@@ -133,9 +133,13 @@ function Form() {
             variant="outlined"
             size="small"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, mb: 2 }}
             disabled={!photoPreview}
           />
+          <Typography onClick={() => navigate("/calendar")} variant="body1" textAlign="center" className="clickable">
+            {" "}
+            Just want to see calendar?
+          </Typography>
         </form>
       </Grid>
     </Grid>

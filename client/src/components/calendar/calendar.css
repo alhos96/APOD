@@ -1,3 +1,12 @@
 .calendar-logo {
   height: 20vh;
 }
+
+.calendar {
+  font-size: 13px;
+}
+
+.warning {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}

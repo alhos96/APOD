@@ -7,7 +7,6 @@ import "./birthdays.css";
 
 function BirthdaysList({ allBirthdays, setCurrentDate }) {
   const navigate = useNavigate();
-  const url = window.location.pathname;
 
   const [showModal, setShowModal] = useState("none");
   const [id, setId] = useState("");
@@ -47,7 +46,7 @@ function BirthdaysList({ allBirthdays, setCurrentDate }) {
                     onClick={(e) => {
                       setCurrentDate(e.target.id);
                       window.scrollTo({
-                        top: 0,
+                        top: 175,
                         behavior: "smooth",
                       });
                     }}

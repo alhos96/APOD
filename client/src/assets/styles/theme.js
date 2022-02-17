@@ -18,6 +18,6 @@ export const theme = createTheme({
     divider: "#0b3c9187",
   },
   typography: {
-    fontSize: 16,
+    fontSize: 15,
   },
 });

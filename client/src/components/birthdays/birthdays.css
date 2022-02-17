@@ -13,7 +13,7 @@
   margin-top: 20px;
   border: 2px solid #0b3d91;
   border-radius: 5px;
-  height: 200px;
+  height: 300px;
   width: 100%;
   overflow-x: scroll;
   overflow-y: scroll;
@@ -37,4 +37,5 @@ td {
 .clickable {
   color: #0b3d91 !important;
   text-decoration: underline !important;
+  cursor: pointer;
 }
