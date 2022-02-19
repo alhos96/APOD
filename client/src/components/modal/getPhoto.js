@@ -8,7 +8,6 @@ export const getPhoto = async (setState, date, setIsLoading) => {
     let data = await axios
       .get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_API_KEY}&date=${formatedBirthday}`)
       .then((res) => {
-        console.log(res);
         setState(res.data);
       });
 
