@@ -55,7 +55,7 @@ The APOD app will provide following functions by role:
 After cloning repository and opening it, in terminal type command `cd server` and add your own .env file with following variables: 
 - **PORT** = "example_of_format" - please use 5000,  
 - **MONGO_URI** = "example_of_format" - if not provided local database will be used 
-- **JWT_SECRET** = "example_of_format" 
+- **SECRET** = "example_of_format" 
 
 After that run `npm install` to install all the dependencies. This application requires data to be seeded before initial run. For that you should type `npm run seed` command while still inside server folder. After completing all these steps run `npm start` script. 
 
@@ -70,7 +70,7 @@ After that in terminal type command `cd client` and run `npm install` script to 
 
 That runs the frontend part of application in the development mode.
 
-Open http://localhost:3000 to view it in the browser. Homepage will be open with the form in which you can type your data. To login as admin please navigate to **/admin** route manualy and use following credentials: 
+Open http://localhost:3000 to view it in the browser. Homepage will be open with the form in which you can type your data. To login as admin please navigate to **http://localhost:3000/admin** route manualy and use following credentials: 
 
 - **name**: admin
 - **password**: 123admin123
