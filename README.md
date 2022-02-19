@@ -2,8 +2,30 @@
 The software system being produced is called APOD. It is application that allows customers to see photo of the day published by NASA on their birthday.
 
 ## technologies
-In this MERN stack application the **frontend** is developed in HTML5, CSS3 and React.js Material UI library. **backend** is created in Express and Node.js. 
-**Data** is stored in MongoDB Atlas or localy.
+In this MERN stack application
+
+### frontend 
+  is developed in HTML5, CSS3 and React.js Material UI library. I have also used following packages among creat-react-app preloads:
+  - axios
+  - formik
+  - moment
+  - react-big-calendar
+  - react-router-dom
+  - yup
+
+
+### backend 
+  is developed in Node.js using following packages.
+  - express
+  - bcrypt
+  - cors
+  - dotenv
+  - jsonwebtoken
+  - mongoose
+  - multer
+
+### Data 
+  is stored in MongoDB Atlas or localy.
 
 ## description and features
 The APOD app will provide following functions by role:
