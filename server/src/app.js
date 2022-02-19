@@ -6,6 +6,7 @@ const config = require("../config");
 const app = express();
 
 const birthdayRoutes = require("./routes/birthday.routes");
+const adminRoutes = require("./routes/admin.routes");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ extended: true }));
@@ -13,6 +14,7 @@ app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 app.use("/api", birthdayRoutes);
+app.use("/admin", adminRoutes);
 
 mongoose
   .connect(config.mongo)

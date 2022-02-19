@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Calendar, momentLocalizer } from "react-big-calendar";
+import { Typography } from "@mui/material";
 import moment from "moment";
 import axios from "axios";
 
-import Logo from "../utils/Logo";
-import BirthdaysList from "../birthdays/BirthdaysList";
 import "./calendar.css";
-import { Typography } from "@mui/material";
+import Logo from "../utils/Logo";
+import Loader from "../utils/Loader";
+import BirthdaysList from "../birthdays/BirthdaysList";
 import MyModal from "../modal/MyModal";
+import AdminLogoutButton from "./AdminLogoutButton";
 
 const localizer = momentLocalizer(moment);
 
@@ -18,16 +20,21 @@ function MyCalendar() {
   const [selectedBirthday, setSelectedBirthday] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // global state
+  const adminIsLoggedIn = sessionStorage.getItem("token");
+
   // get all birthdays data
   useEffect(() => {
     const getBirthdays = async () => {
       try {
-        let data = axios.get("http://localhost:5000/api/calendar").then((res) => {
+        let data = await axios.get("http://localhost:5000/api/calendar").then((res) => {
           setAllBirthdays(res.data);
-          setCurrentDate(res.data[0]?.birthday);
+
+          // prevent app from crashing when no birthdays are returend and undefined is passed to Date.
+          res.data.length > 0 && setCurrentDate(new Date(res.data[0]?.birthday));
         });
 
-        if (!data) throw new Error("No movies recieved...");
+        if (!data) throw new Error("No birthdays recieved...");
       } catch (error) {
         console.log(error);
       } finally {
@@ -38,7 +45,7 @@ function MyCalendar() {
     getBirthdays();
   }, []);
 
-  if (isLoading) return <p>...Loading</p>;
+  if (isLoading) return <Loader />;
 
   return (
     <div className="calendar">
@@ -47,6 +54,8 @@ function MyCalendar() {
       <div className="calendar-logo">
         <Logo />
       </div>
+
+      {adminIsLoggedIn && <AdminLogoutButton />}
 
       <Calendar
         localizer={localizer}
@@ -66,7 +75,7 @@ function MyCalendar() {
       />
 
       {allBirthdays.length > 0 ? (
-        <BirthdaysList allBirthdays={allBirthdays} setCurrentDate={setCurrentDate} />
+        <BirthdaysList allBirthdays={allBirthdays} setAllBirthdays={setAllBirthdays} setCurrentDate={setCurrentDate} />
       ) : (
         <Typography textAlign="center" variant="body2" className="warning" color="secondary">
           Something went wrong when fetching birthdays. Check connections and refresh page or click on logo to add birthday..

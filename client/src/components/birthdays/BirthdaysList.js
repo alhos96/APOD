@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Box, Divider, Typography, Link, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Zoom } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Divider, Typography, Link, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import axios from "axios";
 
 import "./birthdays.css";
 
-function BirthdaysList({ allBirthdays, setCurrentDate }) {
+function BirthdaysList({ allBirthdays, setAllBirthdays, setCurrentDate }) {
   const navigate = useNavigate();
+
+  // global state
+  const adminIsLoggedIn = sessionStorage.getItem("token");
 
   const [showModal, setShowModal] = useState("none");
   const [id, setId] = useState("");
@@ -27,7 +31,7 @@ function BirthdaysList({ allBirthdays, setCurrentDate }) {
               <TableCell key="birthday">Birthday</TableCell>
               <TableCell key="email">Email</TableCell>
               <TableCell key="phone">Phone</TableCell>
-              <TableCell key="actions">Actions</TableCell>
+              {adminIsLoggedIn && <TableCell key="actions">Actions</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -44,7 +48,8 @@ function BirthdaysList({ allBirthdays, setCurrentDate }) {
                   <TableCell
                     id={birthday.birthday}
                     onClick={(e) => {
-                      setCurrentDate(e.target.id);
+                      // convert string to Date to avoid errors
+                      setCurrentDate(new Date(e.target.id));
                       window.scrollTo({
                         top: 175,
                         behavior: "smooth",
@@ -63,12 +68,12 @@ function BirthdaysList({ allBirthdays, setCurrentDate }) {
                     {birthday.phone}
                   </TableCell>
                   <TableCell width="5px">
-                    {
+                    {adminIsLoggedIn && (
                       <>
                         <Link
                           className="table-link link"
-                          onClick={(e) => navigate(`/birthdays/edit-birthday/${e.target.id}`)}
                           id={birthday._id}
+                          onClick={(e) => navigate(`/edit/${e.target.id}`)}
                           sx={{ mr: 1 }}
                           size="small"
                         >
@@ -79,14 +84,14 @@ function BirthdaysList({ allBirthdays, setCurrentDate }) {
                           id={birthday._id}
                           size="small"
                           onClick={(e) => {
-                            setShowModal("block");
-                            setId(e.target.id);
+                            console.log(e.target.id);
+                            axios.delete(`http://localhost:5000/api/${e.target.id}`).then((res) => setAllBirthdays(res.data));
                           }}
                         >
                           Delete
                         </Link>
                       </>
-                    }
+                    )}
                   </TableCell>
                 </TableRow>
               );
