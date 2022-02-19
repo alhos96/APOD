@@ -2,7 +2,7 @@
   min-height: 100vh;
 }
 
-.login-form {
+.birthday-form {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,9 +10,6 @@
 }
 
 #uploaded-image {
-  position: absolute;
-  top: 0px;
-  left: 20px;
   height: 80px;
   width: 80px;
   object-fit: cover;
@@ -31,4 +28,30 @@
 .upload-photo:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+
+.photo-upload-wrapp {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.photo-upload-wrapp:hover {
+  border: 1px solid #000000;
+}
+
+/**/
+
+.text-input {
+  display: block;
+  height: 40px;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  padding: 0 10px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.text-input:focus {
+  outline: 2px solid #fc3e21ac;
 }

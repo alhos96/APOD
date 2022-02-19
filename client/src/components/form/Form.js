@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { TextField, Button, Divider, Typography, Grid } from "@mui/material";
+import { useState, useEffect } from "react";
+import { TextField, Button, Typography, Grid } from "@mui/material";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
-import { useFormik, useField } from "formik";
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 
 import "./form.css";
 import Logo from "../utils/Logo";
@@ -13,12 +14,24 @@ function Form() {
   const navigate = useNavigate();
 
   const [photoPreview, setPhotoPreview] = useState("");
+  const [message, setMessage] = useState("");
+
+  // prevent adding dates from future in date input field
+  useEffect(() => {
+    let today = moment().toDate();
+
+    document.getElementById("my-date").max = moment(today).format("YYYY-MM-DD");
+  }, []);
 
   const formik = useFormik({
     initialValues: { name: "", email: "", birthday: "", phone: "", img: "" },
     validationSchema: validationSchema,
     validateOnChange: true,
     onSubmit: (values) => {
+      if (values.img === "") {
+        return setMessage("Image is required!");
+      }
+
       const newBirthday = new FormData();
 
       newBirthday.append("img", values.img);
@@ -45,28 +58,34 @@ function Form() {
         <Logo />
       </Grid>
 
-      <Grid item xs={12} md={6} className="login-form">
-        {photoPreview && <img id="uploaded-image" src={photoPreview} alt="uploaded"></img>}
-
+      <Grid item xs={12} md={6} className="birthday-form">
         <form onSubmit={formik.handleSubmit} className="form-container">
-          <label className="upload-photo" htmlFor="img">
-            {!photoPreview && <CameraAltOutlinedIcon color="primary" className="camera-icon" />}
+          <div className="photo-upload-wrapp">
+            <label className="upload-photo" htmlFor="img">
+              {photoPreview && <img id="uploaded-image" src={photoPreview} alt="uploaded"></img>}
 
-            <Typography className="upload-photo-title" variant="body2" fontSize="small" color="primary">
-              {!photoPreview ? "Upload Photo. Photo is required." : "Choose Different?"}
-            </Typography>
+              {!photoPreview && <CameraAltOutlinedIcon color="primary" className="camera-icon" />}
 
-            <input
-              style={{ display: "none" }}
-              onChange={(e) => {
-                setPhotoPreview(URL.createObjectURL(e.target.files[0]));
-                formik.values.img = e.target.files[0];
-              }}
-              id="img"
-              type="file"
-              name="img"
-            />
-          </label>
+              <Typography className="upload-photo-title" variant="body2" fontSize="small" color="primary">
+                {!photoPreview ? "Upload Photo." : "Choose Different?"}
+              </Typography>
+
+              <input
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  setPhotoPreview(URL.createObjectURL(e.target.files[0]));
+                  formik.values.img = e.target.files[0];
+                }}
+                id="img"
+                type="file"
+                name="img"
+              />
+            </label>
+          </div>
+
+          <Typography variant="body2" color="secondary">
+            {message}
+          </Typography>
 
           <TextField
             name="name"
@@ -86,6 +105,7 @@ function Form() {
           <TextField
             name="birthday"
             type="date"
+            id="my-date"
             value={formik.values.birthday}
             onChange={formik.handleChange}
             error={formik.touched.birthday && Boolean(formik.errors.birthday)}
@@ -126,17 +146,9 @@ function Form() {
           />
 
           {/* button will remain disabled until photo is uploaded*/}
-          <Button
-            children="submit"
-            type="submit"
-            color="primary"
-            variant="outlined"
-            size="small"
-            fullWidth
-            sx={{ mt: 2, mb: 2 }}
-            disabled={!photoPreview}
-          />
-          <Typography onClick={() => navigate("/calendar")} variant="body1" textAlign="center" className="clickable">
+          <Button children="submit" type="submit" color="primary" variant="outlined" size="large" fullWidth sx={{ mt: 2, mb: 2 }} />
+
+          <Typography onClick={() => navigate("/calendar")} variant="body2" textAlign="center" className="clickable">
             {" "}
             Just want to see calendar?
           </Typography>
