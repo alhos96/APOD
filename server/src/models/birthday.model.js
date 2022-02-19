@@ -11,6 +11,8 @@ exports.Birthday = model(
       email: String,
       phone: Number,
       photo: String,
+
+      // these fields are importan for calendar to work properly. title is name, start and end are birthday
       title: String,
       start: String,
       end: String,
