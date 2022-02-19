@@ -9,7 +9,6 @@ router.post("/form", fileUpload.single("img"), createBirthday);
 router.get("/calendar", getBirthdays);
 router.get("/edit/:id", getSingleBirthday);
 router.patch("/edit/:id", fileUpload.single("img"), editBirthday);
-
 router.delete("/:id", deleteBirthday);
 
 module.exports = router;
